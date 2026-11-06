@@ -1,0 +1,6 @@
+<?php
+// Example only. Demo handler never sends mail.
+define('SMTP_HOST', 'smtp.example.com');
+define('SMTP_PORT', 587);
+define('SMTP_USER', 'demo@example.com');
+define('SMTP_PASS', '');

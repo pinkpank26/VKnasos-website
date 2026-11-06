@@ -1,0 +1,13 @@
+# Uploaded files land here from the site's forms — this folder must never
+# execute anything, even if a malicious file slips past the extension
+# whitelist in send-form.php.
+Options -Indexes -ExecCGI
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .pl .py .cgi .asp .aspx
+AddType text/plain .php .phtml .php3 .php4 .php5 .php7 .pl .py .cgi .asp .aspx
+
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>

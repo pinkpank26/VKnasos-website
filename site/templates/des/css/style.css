@@ -1,0 +1,1638 @@
+.sl-slider-wrapper {
+	width: 900px;
+	height: 300px;
+	margin: 0 auto;
+	position: relative;
+	overflow: hidden;
+}
+
+.sl-slider {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* Slide wrapper and slides */
+
+.sl-slide,
+.sl-slides-wrapper,
+.sl-slide-inner {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+} 
+
+.sl-slide {
+	z-index: 1;
+}
+
+/* The duplicate parts/slices */
+
+.sl-content-slice {
+	overflow: hidden;
+	position: absolute;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	background: #fff;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	backface-visibility: hidden;
+	opacity : 1;
+}
+
+/* Horizontal slice */
+
+.sl-slide-horizontal .sl-content-slice {
+	width: 100%;
+	height: 50%;
+	left: -200px;
+	-webkit-transform: translateY(0%) scale(1);
+	-moz-transform: translateY(0%) scale(1);
+	-o-transform: translateY(0%) scale(1);
+	-ms-transform: translateY(0%) scale(1);
+	transform: translateY(0%) scale(1);
+}
+
+.sl-slide-horizontal .sl-content-slice:first-child {
+	top: -200px;
+	padding: 200px 200px 0px 200px;
+}
+
+.sl-slide-horizontal .sl-content-slice:nth-child(2) {
+	top: 50%;
+	padding: 0px 200px 200px 200px;
+}
+
+/* Vertical slice */
+
+.sl-slide-vertical .sl-content-slice {
+	width: 50%;
+	height: 100%;
+	top: -200px;
+	-webkit-transform: translateX(0%) scale(1);
+	-moz-transform: translateX(0%) scale(1);
+	-o-transform: translateX(0%) scale(1);
+	-ms-transform: translateX(0%) scale(1);
+	transform: translateX(0%) scale(1);
+}
+
+.sl-slide-vertical .sl-content-slice:first-child {
+	left: -200px;
+	padding: 200px 0px 200px 200px;
+}
+
+.sl-slide-vertical .sl-content-slice:nth-child(2) {
+	left: 50%;
+	padding: 200px 200px 200px 0px;
+}
+
+/* Content wrapper */
+/* Width and height is set dynamically */
+.sl-content-wrapper {
+	position: absolute;
+}
+
+.sl-content {
+	width: 100%;
+	height: 100%;
+	background: #fff;
+}
+
+/* Default styles for background colors */
+.sl-slide-horizontal .sl-slide-inner {
+	background: #ddd;
+}
+
+.sl-slide-vertical .sl-slide-inner {
+	background: #ccc;
+}
+
+/* Site-wide header/nav layout: full width, tight logo+name, spread-out menu (desktop/tablet) */
+@media (min-width: 992px) {
+	/* Remove the hamburger icon in front of the first menu item */
+	.nav > li > a.catalog-menu {
+		background-image: none;
+		padding-left: 0 !important;
+	}
+
+	/* Stretch the header/menu row edge-to-edge instead of the centered 990px box */
+	.header-area .container,
+	.menu-area .container {
+		width: 100%;
+		max-width: 100%;
+		padding-left: 40px;
+		padding-right: 40px;
+		margin: 0;
+		box-sizing: border-box;
+	}
+
+	div.header-layer,
+	div.menu-layer {
+		max-width: 100%;
+		margin: 0;
+	}
+
+	/* Remove the divider lines above/below the menu row */
+	div.menu-layer {
+		border-top: none;
+	}
+
+	div.menu-area {
+		border-bottom: none;
+	}
+
+	/* Pull the logo and company name close together on the left */
+	.header-layer .row {
+		display: flex;
+		align-items: center;
+		flex-wrap: nowrap;
+	}
+
+	.header-layer .logo {
+		width: auto;
+		flex: 0 0 auto;
+	}
+
+	.header-layer .name {
+		width: auto;
+		max-width: 345px;
+		flex: 0 1 auto;
+		margin-right: auto;
+		padding-left: 15px;
+	}
+
+	.header-layer .phone {
+		width: auto;
+		flex: 0 0 auto;
+		margin-left: 20px;
+	}
+
+	/* Spread the menu items across the full width, no dividers, bigger text */
+	.nav {
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+	}
+
+	.nav > li {
+		float: none;
+	}
+
+	.nav > li > a {
+		border-right: none;
+		font-size: 17px;
+	}
+}
+
+/* At the narrow end of "desktop" (small laptops/landscape tablets, roughly
+   Bootstrap's md tier) there isn't enough room for logo + full company name
+   + address + two phone numbers all on one nowrap row: .phone refuses to
+   shrink (flex: 0 0 auto) so it was pushing the second phone number past
+   the edge of the screen, while .name absorbed the entire squeeze and
+   wrapped into a tall stack of one/two-word lines. Freeing up space by
+   dropping the address text here (still available in the footer/contacts
+   page) fixes both at once. */
+@media (min-width: 992px) and (max-width: 1199px) {
+	.header-layer .name {
+		max-width: 220px;
+		font-size: 12px;
+	}
+
+	.header-layer .phone .header-address {
+		display: none;
+	}
+
+	.header-layer .phone .phone-line {
+		gap: 14px;
+	}
+}
+
+/* Homepage hero: nav floats transparently over the fullscreen slider (desktop/tablet) */
+@media (min-width: 992px) {
+	body.home .home-nav-fixed {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 3000;
+		background: transparent;
+	}
+
+	body.home .home-nav-fixed .name {
+		color: #fff;
+		font-weight: 500;
+		text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65), 0 0 1px rgba(0, 0, 0, 0.5);
+	}
+
+	body.home .home-nav-fixed .max-toggle img,
+	body.home .home-nav-fixed .tg-toggle img {
+		filter: none;
+	}
+
+	body.home .home-nav-fixed .phone a,
+	body.home .home-nav-fixed .phone-mobile a {
+		color: #fff;
+	}
+
+	body.home .home-nav-fixed .phone span.phone-info,
+	body.home .home-nav-fixed .phone-mobile span.phone-info {
+		color: rgba(255, 255, 255, 0.75);
+	}
+
+	body.home .home-nav-fixed .phone span.phone-info a {
+		color: #8ecdf7;
+	}
+
+	body.home .home-nav-fixed .phone a.header-address,
+	body.home .home-nav-fixed .phone-mobile a.header-address {
+		color: rgba(255, 255, 255, 0.85);
+		font-size: 16px;
+		font-weight: 500;
+	}
+
+	body.home .home-nav-fixed .nav > li > a {
+		color: #fff;
+	}
+
+	body.home .home-nav-fixed .nav > li > a.order-menu {
+		color: #fff;
+	}
+
+	body.home .slider-mobi {
+		position: relative;
+		z-index: 1;
+	}
+}
+
+/* Homepage hero: nav floats transparently over the fullscreen slider (mobile) */
+@media (max-width: 991px) {
+	body.home .home-nav-fixed {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 3000;
+		background: transparent;
+	}
+
+	body.home .home-nav-fixed .name-mobile {
+		color: #fff;
+		font-weight: 500;
+		text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65), 0 0 1px rgba(0, 0, 0, 0.5);
+	}
+
+	body.home .home-nav-fixed .max-toggle img,
+	body.home .home-nav-fixed .tg-toggle img {
+		filter: none;
+	}
+
+	body.home .home-nav-fixed .phone-mobile .phone-toggle,
+	body.home .home-nav-fixed .phone-mobile .max-toggle,
+	body.home .home-nav-fixed .phone-mobile .tg-toggle {
+		color: #fff;
+	}
+
+	body.home .home-nav-fixed .header-address-row a.header-address {
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	body.home .home-nav-fixed .menu-btn {
+		color: #fff;
+	}
+
+	body.home .slider-mobi {
+		position: relative;
+		z-index: 1;
+	}
+}
+
+/* Nicer dropdown submenu: card look, soft shadow, animated hover highlight */
+.nav > li > div.dropdown-panel {
+	width: 340px !important;
+	left: 0 !important;
+	top: 54px;
+	padding: 0;
+	border: none;
+	border-radius: 10px;
+	box-shadow: 0 16px 32px rgba(20, 30, 50, 0.18);
+	overflow: hidden;
+	margin-top: 4px;
+	transform: translateY(-6px);
+}
+
+.nav > li:hover > div.dropdown-panel {
+	transform: translateY(0);
+}
+
+.dropdown-panel .nav-column {
+	float: none;
+	width: 100%;
+	padding: 10px;
+}
+
+.dropdown-panel .nav-column ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.dropdown-panel .nav-column li a {
+	display: block;
+	line-height: 20px;
+	padding: 12px 16px;
+	margin-bottom: 2px;
+	border-bottom: none;
+	border-left: 3px solid transparent;
+	border-radius: 6px;
+	font-family: 'Rubik', sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+	color: #28333e;
+	transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+}
+
+.dropdown-panel .nav-column li a:hover {
+	background: #f0f7fc;
+	border-left-color: #1085c8;
+	color: #1085c8;
+	text-decoration: none;
+	padding-left: 22px;
+}
+
+/* Mobile off-canvas menu: smoother slide + card-style nav to match the desktop dropdowns */
+#container,
+.pushy,
+.push {
+	transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1) !important;
+}
+
+.pushy {
+	background: rgba(20, 23, 28, 0.85);
+	-webkit-backdrop-filter: blur(16px);
+	backdrop-filter: blur(16px);
+	box-shadow: -10px 0 40px rgba(0, 0, 0, 0.25);
+}
+
+/* #container already shifts its whole subtree when the menu opens — any
+   .push-classed descendant getting its OWN shift on top of that compounds
+   into a double-distance slide, leaving a blank gap where the page should
+   still be. Cancel the redundant inner shift for the homepage hero, where
+   the dark background makes the gap obvious (it's a no-op visually on
+   plain white pages, so left untouched there). */
+body.home.pushy-open-right #container .push {
+	transform: none !important;
+}
+
+nav.pushy span {
+	background: rgba(255, 255, 255, 0.05);
+	color: #fff;
+	font-family: 'Rubik', sans-serif;
+	font-weight: 600;
+	font-size: 12px;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	padding: 16px 20px 10px;
+}
+
+nav.pushy ul li {
+	border-bottom: none;
+	padding: 0;
+}
+
+.pushy a {
+	padding: 12px 20px;
+	font-family: 'Rubik', sans-serif;
+	font-size: 15px;
+	font-weight: 500;
+	color: rgba(255, 255, 255, 0.85);
+	border-left: 3px solid transparent;
+	transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+}
+
+.pushy a:hover,
+.pushy a:active {
+	background: rgba(255, 255, 255, 0.08);
+	border-left-color: #1085c8;
+	color: #8ecdf7;
+	padding-left: 26px;
+}
+
+/* Staggered cascade-in for menu items as the panel opens */
+.pushy-link {
+	opacity: 0;
+	transform: translateX(16px);
+}
+
+.pushy-open-right .pushy-link {
+	animation: pushyItemIn 0.45s ease forwards;
+}
+
+.pushy-open-right .pushy-link:nth-child(1) { animation-delay: 0.08s; }
+.pushy-open-right .pushy-link:nth-child(2) { animation-delay: 0.13s; }
+.pushy-open-right .pushy-link:nth-child(3) { animation-delay: 0.18s; }
+.pushy-open-right .pushy-link:nth-child(4) { animation-delay: 0.23s; }
+.pushy-open-right .pushy-link:nth-child(5) { animation-delay: 0.28s; }
+.pushy-open-right .pushy-link:nth-child(6) { animation-delay: 0.33s; }
+
+@keyframes pushyItemIn {
+	from {
+		opacity: 0;
+		transform: translateX(16px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+/* Top-level items (Сервис / Продукты и решения / О компании / Новости / Контакты / Отправить заявку) */
+.pushy a.service-link {
+	font-size: 16px;
+	font-weight: 600;
+	padding: 15px 20px;
+	color: #fff;
+}
+
+.pushy a.service-link:hover,
+.pushy a.service-link:active {
+	background: rgba(255, 255, 255, 0.08);
+	border-left-color: #1085c8;
+	color: #8ecdf7;
+	padding-left: 26px;
+}
+
+.pushy a.top-link {
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.service-link {
+	opacity: 0;
+	transform: translateX(16px);
+}
+
+.pushy-open-right .service-link {
+	animation: pushyItemIn 0.4s ease forwards;
+	animation-delay: 0.05s;
+}
+
+/* Fix the broken vendor chevron icon with a clean CSS-drawn arrow */
+.pushy-submenu > a::after {
+	content: '';
+	display: block;
+	width: 7px;
+	height: 7px;
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	margin-top: -5px;
+	background: none;
+	border: none;
+	border-right: 2px solid rgba(255, 255, 255, 0.7);
+	border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+	transform: rotate(45deg);
+	transition: transform 0.25s ease, margin-top 0.25s ease;
+}
+
+.pushy-submenu-open > a::after {
+	transform: rotate(-135deg);
+	margin-top: -1px;
+}
+
+/* Homepage: dark, understated content section (replaces the old plain bullet list) */
+body.home div.content-area {
+	background: #14171c;
+}
+
+body.home div.content h1 {
+	color: #fff;
+	border-bottom-color: #1085c8;
+}
+
+body.home div.content-layer > .row > .content > p {
+	color: #9aa1ab;
+	font-size: 15px;
+	max-width: 720px;
+}
+
+/* Desktop: stretch the section edge-to-edge across the full viewport height —
+   heading at the top, stats filling the middle, cards anchored at the bottom */
+@media (min-width: 992px) {
+	body.home div.content-area {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		box-sizing: border-box;
+		padding-top: 80px;
+		padding-bottom: 80px;
+	}
+
+	/* flex-grow (instead of percentage heights) so the chain reliably fills
+	   the section regardless of bootstrap's float/margin box model */
+	body.home div.content-area > .container,
+	body.home div.content-layer,
+	body.home div.content-layer > .row,
+	body.home div.content-layer > .row > .content {
+		width: 100%;
+		max-width: 100%;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		float: none;
+		margin: 0;
+	}
+
+	body.home div.content-area > .container {
+		padding-left: 60px;
+		padding-right: 60px;
+		box-sizing: border-box;
+	}
+
+	body.home div.content-layer > .row > .content {
+		justify-content: space-between;
+	}
+
+	body.home div.content h1 {
+		font-size: 42px;
+		padding-bottom: 16px;
+	}
+
+	body.home div.content-layer > .row > .content > .content-intro > p {
+		font-size: 19px;
+		max-width: 780px;
+		margin-bottom: 10px;
+		line-height: 1.6;
+	}
+
+	body.home div.content .service-cards {
+		margin-top: 0;
+		gap: 40px;
+	}
+
+	body.home div.content .service-card h3 {
+		font-size: 19px;
+	}
+
+	body.home div.content .service-card p {
+		font-size: 15px;
+	}
+}
+
+/* Stats strip — fills the middle of the fullscreen section.
+   Same grid as .service-cards below so each stat lines up over its
+   corresponding card (1st over 1st, 2nd over 2nd, etc). */
+body.home div.content-stats {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+	margin: 50px 0;
+}
+
+body.home div.content-stats .stat {
+	display: flex;
+	flex-direction: column;
+}
+
+body.home div.content-stats .stat-num {
+	font-family: 'Rubik', sans-serif;
+	font-weight: 700;
+	font-size: 40px;
+	color: #fff;
+}
+
+body.home div.content-stats .stat-label {
+	font-size: 14px;
+	color: #9aa1ab;
+	max-width: 220px;
+	margin-top: 6px;
+}
+
+@media (max-width: 991px) {
+	body.home div.content-stats {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 600px) {
+	body.home div.content-stats {
+		grid-template-columns: 1fr;
+	}
+}
+
+div.content .service-cards {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 20px;
+	margin: 40px 0 10px;
+}
+
+div.content a.service-card {
+	display: block;
+	background: transparent;
+	border: none;
+	border-left: 2px solid rgba(255, 255, 255, 0.15);
+	border-radius: 0;
+	padding: 4px 0 4px 22px;
+	text-decoration: none;
+	transition: border-color 0.25s ease, padding-left 0.25s ease;
+}
+
+div.content a.service-card:hover {
+	border-left-color: #1085c8;
+	padding-left: 28px;
+}
+
+div.content .service-card h3 {
+	font-family: 'Rubik', sans-serif;
+	font-weight: 600;
+	font-size: 17px;
+	color: #fff;
+	margin: 0 0 10px;
+	border: none;
+	display: block;
+	padding: 0;
+}
+
+div.content .service-card p {
+	font-size: 14px;
+	line-height: 1.6;
+	color: #9aa1ab;
+	margin: 0 0 16px;
+}
+
+div.content .service-card-link {
+	font-family: 'Rubik', sans-serif;
+	font-weight: 500;
+	font-size: 13px;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	color: #8ecdf7;
+}
+
+@media (max-width: 991px) {
+	div.content .service-cards {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 600px) {
+	div.content .service-cards {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Site-wide footer: dark theme + full width, same on every page */
+div.footer-menu-area,
+div.footer-area {
+	background: #14171c;
+}
+
+/* Divider above the footer ("Сервис" / "Продукты и решения" / "Контакты"),
+   separating it from the page content above. Unconditional (no media query,
+   no body.home scoping) so it shows on every page, on mobile and desktop,
+   at any window width — including a desktop window resized to half the
+   screen, which is narrower than the old min-width:992px hero rule this
+   replaces. */
+div.footer-menu-area {
+	border-top: 2px solid rgba(255, 255, 255, 0.18);
+}
+
+div.footer-menu-layer {
+	border-bottom-width: 2px;
+	border-bottom-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Mobile: the 3 footer columns stack full-width with no gap between them —
+   give each one its own divider so "Сервис" / "Продукты и решения" / "Контакты"
+   read as separate blocks. Same footer markup on every page. */
+@media (max-width: 767px) {
+	div.footer-menu-layer div.footer-menu {
+		padding-bottom: 16px;
+		margin-bottom: 16px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+	}
+
+	div.footer-menu-layer div.footer-menu:last-child {
+		padding-bottom: 0;
+		margin-bottom: 0;
+		border-bottom: none;
+	}
+}
+
+div.footer-menu-layer div.footer-menu span {
+	color: #fff;
+}
+
+div.footer-menu-layer div.footer-menu {
+	color: #9aa1ab;
+}
+
+div.footer-menu-layer div.footer-menu a.t {
+	color: #9aa1ab;
+}
+
+div.footer-menu-layer div.footer-menu a {
+	color: #9aa1ab;
+	text-decoration: none;
+}
+
+div.footer-menu-layer div.footer-menu a:hover {
+	color: #fff;
+}
+
+div.footer-layer div.footer,
+div.footer-layer div.footer a {
+	color: #676e79;
+	text-align: left;
+}
+
+div.footer-layer div.footer .footer-policy {
+	margin-top: 8px;
+}
+
+div.footer-layer div.footer .footer-policy a {
+	color: #8ecdf7;
+	text-decoration: underline;
+}
+
+@media (min-width: 992px) {
+	div.footer-menu-area .container,
+	div.footer-area .container {
+		width: 100%;
+		max-width: 100%;
+		padding-left: 60px;
+		padding-right: 60px;
+		box-sizing: border-box;
+	}
+
+	div.footer-menu-layer,
+	div.footer-layer {
+		max-width: 100%;
+	}
+}
+
+/* Site-wide dark background — same as the homepage, on every page's content area */
+html body {
+	background-color: #14171c;
+}
+
+div.content-area {
+	background: #14171c;
+}
+
+/* Inner pages: same dark header as the homepage, just in normal flow (no hero photo to float over) */
+body:not(.home) div.header-area,
+body:not(.home) div.menu-area {
+	background-color: #14171c;
+}
+
+body:not(.home) div.menu-area {
+	border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body:not(.home) div.header-area .name,
+body:not(.home) div.header-area .name-mobile {
+	color: rgba(255, 255, 255, 0.85);
+}
+
+body:not(.home) .max-toggle img,
+body:not(.home) .tg-toggle img {
+	filter: none;
+}
+
+body:not(.home) div.header-area .phone a,
+body:not(.home) div.header-area .phone-mobile > a,
+body:not(.home) div.header-area .phone-mobile .phone-toggle,
+body:not(.home) div.header-area .phone-mobile .max-toggle,
+body:not(.home) div.header-area .phone-mobile .tg-toggle,
+body:not(.home) div.header-area .menu-btn {
+	color: #fff;
+}
+
+/* The phone-number dropdown itself is a white popup card — its links need
+   the normal dark text, not the white color meant for the header bar. */
+body:not(.home) div.header-area .phone-mobile .phone-dropdown a {
+	color: #28333e;
+}
+
+body:not(.home) div.header-area .phone span.phone-info,
+body:not(.home) div.header-area .phone-mobile span.phone-info {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+body:not(.home) div.header-area a.header-address,
+body:not(.home) div.header-area .header-address-row a.header-address {
+	color: rgba(255, 255, 255, 0.85);
+}
+
+body:not(.home) div.menu-area .nav > li > a {
+	color: #fff;
+}
+
+body:not(.home) div.menu-area .nav > li > a.order-menu {
+	color: #8ecdf7;
+}
+
+div.content-layer {
+	color: #9aa1ab;
+}
+
+div.content h1,
+div.content-index h1,
+div.content h2,
+div.content-index h2,
+div.content h3 {
+	color: #fff;
+}
+
+/* "О компании" — push the title down a bit so it sits closer to the
+   partner-logo row right under it instead of floating with a big gap. */
+div.content h1 {
+	margin-top: 24px;
+}
+
+div.content h1 + .content-gallery {
+	margin-top: 12px;
+}
+
+div.content ul li.best {
+	color: #fff;
+}
+
+/* Default browser <ul> indent (40px) pushed bullet lists noticeably to
+   the right of the headings/paragraphs above them (e.g. "Часы работы"
+   on the contacts page) — tighten it so list text lines up with the
+   rest of the copy. */
+div.content ul {
+	padding-left: 20px;
+}
+
+/* "Карта проезда" (contacts page) — the header/menu bar already stretches
+   edge-to-edge (see .header-area .container above) rather than sitting in
+   the fixed 1170px bootstrap container, so "full site width" here means
+   matching that edge-to-edge treatment, not the narrower content column.
+   Same full-bleed technique, same 40px gutter as the header. */
+@media (min-width: 992px) {
+	div.content p.map-embed {
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
+		padding-left: 40px;
+		padding-right: 40px;
+		box-sizing: border-box;
+	}
+}
+
+div.content p a {
+	color: #8ecdf7;
+	border-bottom-color: #8ecdf7;
+}
+
+/* Photo galleries dropped into content pages (service pages, about, parts, etc.).
+   align-items defaults to stretch on a flex row, which was forcing every photo
+   to the same height as its tallest neighbor — since plain <img> has no
+   object-fit, that squashed/stretched any photo whose aspect ratio didn't
+   match. flex-start lets each photo keep its own natural (width-driven)
+   height instead. */
+div.content .content-gallery {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 16px;
+	margin: 24px 0;
+}
+
+div.content .content-gallery img {
+	flex: 1 1 260px;
+	max-width: 100%;
+	width: 260px;
+	height: auto;
+	border-radius: 8px;
+	background: rgba(255, 255, 255, 0.04);
+	cursor: zoom-in;
+}
+
+/* A gallery with just one photo shouldn't stretch (flex-grow) to fill
+   the whole row — that's what was blowing single-image galleries
+   (e.g. the "Износ рабочего колеса" shot) up to near full page width. */
+div.content .content-gallery img:only-child {
+	flex-grow: 0;
+}
+
+/* "Износ рабочего колеса" (service/pump) — a bit bigger than the default
+   single-photo size. */
+div.content .content-gallery.content-gallery-lg img {
+	width: 400px;
+}
+
+/* "Сервис промышленного оборудования" / "Перемотка электродвигателей" —
+   these photos have different native aspect ratios (portrait vs
+   landscape), so letting each keep its own height (the default) leaves a
+   ragged row. Give them all the same tall box and object-fit: cover so
+   every tile fills its frame completely — no letterbox bars, at the cost
+   of cropping the edges of whichever photo doesn't match the frame ratio. */
+div.content .content-gallery.content-gallery-uniform img {
+	height: 400px;
+	object-fit: cover;
+}
+
+/* "Сервисные услуги для насосного оборудования" (service/industrial) —
+   this single photo should stretch to fill the row like it originally
+   did, unlike the other single-image galleries above. */
+div.content .content-gallery.content-gallery-full img:only-child {
+	flex-grow: 1;
+}
+
+@media (max-width: 767px) {
+	div.content .content-gallery img {
+		flex: 1 1 100px;
+		width: 100px;
+	}
+
+	div.content .content-gallery img:only-child,
+	div.content .content-gallery.content-gallery-full img:only-child {
+		flex: 1 1 100%;
+		width: 100%;
+	}
+
+	div.content .content-gallery.content-gallery-uniform img {
+		height: 220px;
+	}
+}
+
+/* Card-style gallery (household service page) — same look as the
+   catalog product cards (photo + dark caption), minus the quickview
+   magnifier: just a static photo card, click-to-lightbox like any
+   other .content-gallery image. */
+div.content .content-gallery.content-gallery-cards {
+	align-items: stretch;
+}
+
+div.content .content-gallery .gallery-card {
+	flex: 1 1 260px;
+	max-width: 100%;
+	display: flex;
+	flex-direction: column;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 8px;
+	padding: 20px;
+	overflow: hidden;
+	transition: box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+div.content .content-gallery .gallery-card:hover {
+	background: rgba(255, 255, 255, 0.07);
+	border-color: rgba(16, 133, 200, 0.5);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+div.content .content-gallery .gallery-card img {
+	width: calc(100% + 40px);
+	max-width: calc(100% + 40px);
+	height: 220px;
+	margin: -20px -20px 14px;
+	object-fit: contain;
+	background: #fff;
+	border-radius: 0;
+	flex: none;
+}
+
+div.content .content-gallery .gallery-card h3 {
+	margin: 0;
+	font-size: 15px;
+}
+
+@media (max-width: 767px) {
+	div.content .content-gallery .gallery-card {
+		flex: 1 1 200px;
+	}
+
+	div.content .content-gallery .gallery-card img {
+		height: 160px;
+	}
+}
+
+/* Partner-company logos ("О компании") — no card/frame, just the logo,
+   vertically centered so different logo heights still line up. */
+div.content .content-gallery.partner-gallery {
+	align-items: center;
+}
+
+div.content .content-gallery.partner-gallery img {
+	background: none;
+	border-radius: 0;
+	cursor: default;
+}
+
+/* Certificates and "Наши объекты" thumbnails stay 3-across even on
+   mobile (they're meant to be tapped open full-screen, not read
+   at thumbnail size), unlike the full-size service photo galleries. */
+@media (max-width: 767px) {
+	div.content .content-gallery.partner-gallery,
+	div.content .content-gallery.certificate-gallery {
+		gap: 10px;
+	}
+
+	div.content .content-gallery.partner-gallery img,
+	div.content .content-gallery.certificate-gallery img {
+		flex: 1 1 calc(33.333% - 7px);
+		width: calc(33.333% - 7px);
+	}
+}
+
+/* "Наши объекты" — fixed photo height so all three captions in a row
+   line up instead of drifting with each photo's own aspect ratio. */
+div.work-box img {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 8px;
+	cursor: zoom-in;
+}
+
+@media (max-width: 767px) {
+	div.work-box img {
+		height: 80px;
+	}
+
+	div.work-box p {
+		font-size: 11px;
+		padding-right: 4px;
+	}
+}
+
+/* Order form ("Отправить заявку") — css.css was written for a white page
+   and never got the dark-theme pass, so labels (#333) and the policy link
+   (#222a32) went almost invisible on the #14171c background, and the
+   inputs stayed pure white — a jarring flash of full-white boxes on the
+   dark page. Re-themed here so labels read and inputs match the rest of
+   the dark UI instead of glaring. */
+div.content .mod_contact_left {
+	color: #c7cbd1;
+}
+
+div.content .mod_contact_right input,
+div.content .mod_contact_right textarea,
+div.content .mod_contact_right select {
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	color: #fff;
+}
+
+div.content .mod_contact_right input:focus,
+div.content .mod_contact_right textarea:focus,
+div.content .mod_contact_right select:focus {
+	border-color: #1085c8;
+	outline: none;
+}
+
+div.content .mod_contact_right select option {
+	color: #000;
+}
+
+div.content div.policy a.policy_link {
+	color: #8ecdf7;
+	border-bottom-color: #8ecdf7;
+}
+
+div.content .mod_contact_left img[src*="nospam"] {
+	background: #fff;
+	border-radius: 4px;
+	vertical-align: middle;
+}
+
+/* Full-screen photo viewer for [data-lightbox] galleries — see lightbox.js */
+.lightbox-overlay {
+	display: none;
+	position: fixed;
+	inset: 0;
+	z-index: 5000;
+	background: rgba(10, 12, 15, 0.92);
+	align-items: center;
+	justify-content: center;
+	padding: 40px;
+	box-sizing: border-box;
+	cursor: zoom-out;
+}
+
+.lightbox-overlay.is-open {
+	display: flex;
+}
+
+.lightbox-overlay .lightbox-img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	border-radius: 4px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-overlay .lightbox-close {
+	position: absolute;
+	top: 16px;
+	right: 24px;
+	font-size: 36px;
+	line-height: 1;
+	color: #fff;
+	cursor: pointer;
+}
+
+html body.lightbox-locked {
+	overflow: hidden;
+}
+
+/* Product catalog ("Автоматика и принадлежности") — category filter
+   sidebar on the left, paginated product grid on the right. See
+   templates/des/js/catalog.js for the filter/pagination behaviour. */
+div.content .catalog-layout {
+	display: flex;
+	align-items: flex-start;
+	gap: 32px;
+	margin: 24px 0;
+}
+
+/* Break out of the narrower 990px text column (same full-bleed trick as
+   the contacts-page map) so 3 sizeable cards actually fit next to the
+   category sidebar instead of being squeezed into 2. */
+@media (min-width: 992px) {
+	div.content .catalog-layout {
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
+		padding-left: 40px;
+		padding-right: 40px;
+		box-sizing: border-box;
+	}
+}
+
+div.content .catalog-sidebar {
+	flex: 0 0 260px;
+	position: sticky;
+	top: 24px;
+}
+
+div.content .catalog-categories {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+div.content .catalog-categories li {
+	margin: 0 0 2px;
+}
+
+div.content .catalog-categories .catalog-cat {
+	display: block;
+	padding: 10px 14px;
+	border-radius: 6px;
+	border-left: 3px solid transparent;
+	color: #c7cbd1;
+	font-family: 'Rubik', sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+	transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+div.content .catalog-categories .catalog-cat:hover {
+	background: rgba(255, 255, 255, 0.05);
+	border-left-color: rgba(16, 133, 200, 0.5);
+	color: #fff;
+}
+
+div.content .catalog-categories .catalog-cat.is-active {
+	background: rgba(16, 133, 200, 0.12);
+	border-left-color: #1085c8;
+	color: #fff;
+}
+
+div.content .catalog-categories .catalog-cat:focus {
+	outline: none;
+}
+
+div.content .catalog-main {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+div.content .catalog-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 28px;
+}
+
+div.content .catalog-item {
+	position: relative;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 8px;
+	padding: 20px;
+	overflow: hidden;
+	transition: box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+/* Quick-view magnifier — hidden until the card is hovered, opens the
+   product photo + info popup (see .quickview-* below). */
+div.content .catalog-item-zoom {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 34px;
+	height: 34px;
+	border: none;
+	border-radius: 50%;
+	background: #fff;
+	color: #28333e;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	opacity: 0;
+	transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease;
+	z-index: 3;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+div.content .catalog-item:hover .catalog-item-zoom {
+	opacity: 1;
+}
+
+div.content .catalog-item-zoom:hover {
+	background: #1085c8;
+	color: #fff;
+}
+
+/* Hover treatment modeled on vandjord.com's own catalog cards — a soft
+   lift shadow plus a brighter border/background, no size change. */
+div.content .catalog-item:hover {
+	background: rgba(255, 255, 255, 0.07);
+	border-color: rgba(16, 133, 200, 0.5);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Bleeds edge-to-edge to fill the whole top of the card instead of
+   sitting inside the card's own padding; overflow:hidden on .catalog-item
+   keeps the photo's corners rounded to match. Text below keeps the padding. */
+div.content .catalog-item-gallery {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: -20px -20px 10px;
+}
+
+div.content .catalog-item-gallery img {
+	flex: 1 1 60px;
+	width: 60px;
+	height: 60px;
+	object-fit: contain;
+	background: rgba(255, 255, 255, 0.06);
+	border-radius: 4px;
+}
+
+/* cover cropped these product shots too tightly (edges of the device cut
+   off) — contain shows the whole photo instead, and a white background
+   (matching these product shots' own white backdrop) hides the letterbox
+   so it still reads as filling the card rather than leaving grey bars. */
+div.content .catalog-item-gallery img:only-child {
+	width: 100%;
+	height: 280px;
+	flex-basis: 100%;
+	object-fit: contain;
+	background: #fff;
+	border-radius: 0;
+}
+
+/* Multiple photos on one product: catalog.js hides all but the current
+   image and tracks mouse position across it to switch photos, so the
+   visible one takes the same full-size, edge-to-edge slot as a
+   single-photo card. */
+div.content .catalog-item-gallery.has-slider img {
+	width: 100%;
+	height: 280px;
+	flex-basis: 100%;
+	object-fit: contain;
+	background: #fff;
+	border-radius: 0;
+}
+
+div.content .catalog-item-cat {
+	font-size: 12px;
+	color: #8b93a1;
+	margin-bottom: 4px;
+}
+
+div.content .catalog-item h3 {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 500;
+	color: #fff;
+}
+
+/* Full description/specs live in the markup only as a data source for the
+   quickview popup (catalog.js copies it into .quickview-desc) — not shown
+   on the card itself. */
+div.content .catalog-item-desc {
+	display: none;
+}
+
+div.content .catalog-pagination {
+	display: flex;
+	gap: 8px;
+	margin-top: 28px;
+}
+
+div.content .catalog-pagination .catalog-page {
+	min-width: 36px;
+	height: 36px;
+	padding: 0 6px;
+	border-radius: 6px;
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	background: transparent;
+	color: #c7cbd1;
+	font-family: 'Rubik', sans-serif;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+div.content .catalog-pagination .catalog-page:hover {
+	border-color: #1085c8;
+	color: #fff;
+}
+
+div.content .catalog-pagination .catalog-page.is-active {
+	background: #1085c8;
+	border-color: #1085c8;
+	color: #fff;
+}
+
+div.content .catalog-pagination .catalog-page:focus {
+	outline: none;
+}
+
+@media (max-width: 767px) {
+	div.content .catalog-layout {
+		flex-direction: column;
+	}
+
+	div.content .catalog-sidebar {
+		flex-basis: auto;
+		width: 100%;
+		position: static;
+	}
+
+	div.content .catalog-categories {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	div.content .catalog-categories li {
+		margin: 0;
+	}
+
+	div.content .catalog-categories .catalog-cat {
+		padding: 8px 12px;
+		border-left: none;
+		border: 1px solid rgba(255, 255, 255, 0.15);
+	}
+
+	div.content .catalog-categories .catalog-cat.is-active {
+		border-color: #1085c8;
+	}
+
+	div.content .catalog-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 16px;
+	}
+
+	div.content .catalog-item-gallery img:only-child,
+	div.content .catalog-item-gallery.has-slider img {
+		height: 160px;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+	div.content .catalog-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+/* Quick-view popup ("Автоматика и принадлежности") — opened by the
+   magnifier button on a product card. Photo + dots on the left, name and
+   details on the right. Same dark card look as the rest of the site,
+   not the reference site's white popup. See templates/des/js/catalog.js. */
+.quickview-overlay {
+	display: none;
+	position: fixed;
+	inset: 0;
+	z-index: 5000;
+	background: rgba(10, 12, 15, 0.85);
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	box-sizing: border-box;
+}
+
+.quickview-overlay.is-open {
+	display: flex;
+}
+
+.quickview-box {
+	position: relative;
+	display: flex;
+	background: #1b1f26;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 10px;
+	max-width: 900px;
+	width: 100%;
+	max-height: 90vh;
+	overflow: auto;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.quickview-close {
+	position: absolute;
+	top: 12px;
+	right: 16px;
+	font-size: 28px;
+	line-height: 1;
+	color: #fff;
+	cursor: pointer;
+	z-index: 2;
+}
+
+.quickview-photo {
+	position: relative;
+	flex: 0 0 45%;
+	padding: 32px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.quickview-arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 30px;
+	height: 30px;
+	border: none;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.9);
+	color: #28333e;
+	font-size: 13px;
+	line-height: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	z-index: 2;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.quickview-arrow:hover {
+	background: #1085c8;
+	color: #fff;
+}
+
+.quickview-arrow-prev {
+	left: 40px;
+}
+
+.quickview-arrow-next {
+	right: 40px;
+}
+
+.quickview-photo img {
+	width: 100%;
+	height: 320px;
+	object-fit: contain;
+	background: #fff;
+	border-radius: 6px;
+}
+
+.quickview-dots {
+	display: flex;
+	gap: 6px;
+	margin-top: 14px;
+}
+
+.quickview-dot {
+	width: 8px;
+	height: 8px;
+	padding: 0;
+	border: none;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.25);
+	cursor: pointer;
+}
+
+.quickview-dot.is-active {
+	background: #1085c8;
+}
+
+.quickview-info {
+	flex: 1 1 auto;
+	padding: 40px 40px 40px 0;
+	box-sizing: border-box;
+}
+
+.quickview-cat {
+	color: #8b93a1;
+	font-size: 13px;
+	margin-bottom: 6px;
+}
+
+.quickview-name {
+	color: #fff;
+	font-family: 'Rubik', sans-serif;
+	font-size: 24px;
+	font-weight: 600;
+	margin: 0 0 16px;
+}
+
+.quickview-desc {
+	color: #c7cbd1;
+	font-size: 14px;
+	line-height: 1.5;
+	margin-bottom: 20px;
+}
+
+.quickview-desc:empty {
+	display: none;
+}
+
+.quickview-desc p {
+	margin: 0 0 16px;
+}
+
+.quickview-desc h4 {
+	color: #fff;
+	font-family: 'Rubik', sans-serif;
+	font-size: 15px;
+	font-weight: 600;
+	margin: 0 0 10px;
+}
+
+.quickview-desc ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.quickview-desc li {
+	padding: 5px 0;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.quickview-cta {
+	display: inline-block;
+	margin-top: 12px;
+	padding: 10px 22px;
+	background: #1085c8;
+	color: #fff;
+	border-radius: 4px;
+	text-decoration: none;
+	font-family: 'Rubik', sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.quickview-cta:hover {
+	background: #0d6a9f;
+}
+
+@media (max-width: 767px) {
+	.quickview-box {
+		flex-direction: column;
+		max-height: 95vh;
+	}
+
+	.quickview-photo {
+		flex-basis: auto;
+		padding: 24px 24px 0;
+	}
+
+	.quickview-photo img {
+		height: 220px;
+	}
+
+	.quickview-arrow-prev {
+		left: 8px;
+	}
+
+	.quickview-arrow-next {
+		right: 8px;
+	}
+
+	.quickview-info {
+		padding: 24px;
+	}
+}
+
